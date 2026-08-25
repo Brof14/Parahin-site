@@ -122,14 +122,13 @@
             }
 
             .lang-switcher {
-                position: absolute;
-                top: 4px;
-                right: 0;
                 display: flex;
                 align-items: center;
                 gap: 2px;
                 font-size: 12px;
                 color: var(--ink-dim);
+                flex-shrink: 0;
+                padding-left: 8px;
             }
             .lang-btn {
                 background: none;
@@ -199,15 +198,16 @@
                 z-index: 50;
                 pointer-events: none;
                 background: #111111;
-                clip-path: circle(0px at 50% 50%);
+                clip-path: circle(0px at var(--cx, 50%) var(--cy, 50%));
+                transition: none;
             }
-
-            @keyframes circle-reveal-back {
-                from {
-                    clip-path: circle(150% at 50% 50%);
-                }
+            #page-transition.active {
+                animation: circle-reveal 0.5s cubic-bezier(0.65, 0, 0.35, 1)
+                    forwards;
+            }
+            @keyframes circle-reveal {
                 to {
-                    clip-path: circle(0px at 50% 50%);
+                    clip-path: circle(150% at var(--cx, 50%) var(--cy, 50%));
                 }
             }
 
@@ -266,6 +266,22 @@
                 }
                 .header-section {
                     margin-bottom: 24px;
+                }
+            }
+
+            @media (max-width: 360px) {
+                .card {
+                    padding: 20px;
+                }
+                .content {
+                    font-size: 14px;
+                }
+                .lang-switcher {
+                    font-size: 11px;
+                    padding-left: 4px;
+                }
+                .lang-btn {
+                    padding: 2px 4px;
                 }
             }
         </style>
@@ -415,20 +431,19 @@
             );
 
             const backLink = document.getElementById("back-link");
+            const overlay = document.getElementById("page-transition");
             backLink.addEventListener("click", function (e) {
                 e.preventDefault();
                 const href = this.getAttribute("href");
-                const overlay = document.getElementById("page-transition");
-
-                overlay.style.animation = "none";
-                overlay.style.clipPath = "circle(150% at 50% 50%)";
-                void overlay.offsetWidth;
-                overlay.style.animation =
-                    "circle-reveal-back 0.45s cubic-bezier(0.65,0,0.35,1) forwards";
-
+                const rect = this.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                overlay.style.setProperty("--cx", cx + "px");
+                overlay.style.setProperty("--cy", cy + "px");
+                overlay.classList.add("active");
                 setTimeout(() => {
                     window.location.href = href;
-                }, 400);
+                }, 450);
             });
         </script>
     </body>
