@@ -33,7 +33,7 @@ node --test tests/site.test.mjs
 ```
 
 The `Site quality` workflow runs the same checks on pushes and pull requests.
-These source checks do not replace manual cross-browser and mobile testing.
+The workflow also runs Chromium browser tests using Python Playwright (`tests/browser_smoke.py`). Manual Safari/Firefox checks remain recommended.
 
 ## Accessibility, privacy and performance
 
@@ -42,5 +42,5 @@ These source checks do not replace manual cross-browser and mobile testing.
 - Interactive controls expose their selected state and keyboard focus.
 - Animations respect `prefers-reduced-motion`.
 - Avoid publishing detailed commuting routines or unnecessary personal details.
-- Images remain JPEG assets and should be exported to WebP/AVIF after visual comparison.
+- Pages load optimized WebP assets (portrait ~26 KB, background ~164 KB). Original JPEG images are retained as lossless-generation sources. Regenerate derivatives with `bash scripts/optimize-images.sh` after installing `cwebp`.
 - Keep `CNAME` aligned with the domain and enable HTTPS in GitHub Pages settings.
