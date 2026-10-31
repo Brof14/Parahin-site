@@ -16,307 +16,17 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
         />
-        <style>
-            :root {
-                --bg: #111111;
-                --ink: #f5f5f5;
-                --ink-dim: #9a9a9a;
-                --line: #333333;
-                --x: 50%;
-                --y: 50%;
-            }
-
-            * {
-                box-sizing: border-box;
-                -webkit-tap-highlight-color: transparent;
-            }
-            a,
-            button {
-                touch-action: manipulation;
-            }
-            html,
-            body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                background: var(--bg);
-                color: var(--ink);
-                font-family:
-                    "Inter",
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    sans-serif;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                align-items: safe center;
-                padding: 60px 20px;
-                padding-top: max(60px, env(safe-area-inset-top) + 24px);
-                padding-bottom: max(60px, env(safe-area-inset-bottom) + 24px);
-                padding-left: max(20px, env(safe-area-inset-left) + 20px);
-                padding-right: max(20px, env(safe-area-inset-right) + 20px);
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
-            .bg {
-                position: fixed;
-                inset: -2%;
-                z-index: 0;
-                background: url("altai-bg.jpg") center 55% / cover no-repeat;
-                filter: saturate(0.8) brightness(0.65);
-                pointer-events: none;
-            }
-
-            .spotlight {
-                position: fixed;
-                inset: 0;
-                z-index: 2;
-                pointer-events: none;
-                background: radial-gradient(
-                    circle 250px at var(--x) var(--y),
-                    transparent 0%,
-                    rgba(17, 17, 17, 0.75) 30%,
-                    rgba(17, 17, 17, 0.95) 100%
-                );
-                will-change: background;
-            }
-
-            .grain {
-                position: fixed;
-                inset: 0;
-                z-index: 3;
-                pointer-events: none;
-                opacity: 0.03;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            }
-
-            .card {
-                max-width: 620px;
-                width: 100%;
-                position: relative;
-                z-index: 10;
-                background: rgba(17, 17, 17, 0.3);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                border-radius: 16px;
-                padding: 40px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .back {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                font-size: 16px;
-                color: var(--ink-dim);
-                text-decoration: none;
-                transition:
-                    color 0.2s ease,
-                    transform 0.2s ease;
-                font-weight: 500;
-                border-radius: 4px;
-                padding: 4px 8px;
-                margin: -4px -8px;
-            }
-            .back:focus {
-                outline: 2px solid rgba(255, 255, 255, 0.3);
-                outline-offset: 2px;
-            }
-            .back:hover {
-                color: var(--ink);
-                transform: translateX(-4px);
-            }
-
-            .lang-switcher {
-                display: flex;
-                align-items: center;
-                gap: 2px;
-                font-size: 12px;
-                color: var(--ink-dim);
-                flex-shrink: 0;
-                padding-left: 8px;
-            }
-            .lang-btn {
-                background: none;
-                border: none;
-                color: var(--ink-dim);
-                cursor: pointer;
-                padding: 2px 6px;
-                font-size: 12px;
-                font-weight: 400;
-                transition: color 0.15s ease;
-                font-family: inherit;
-                border-radius: 4px;
-            }
-            .lang-btn:focus {
-                outline: 2px solid rgba(255, 255, 255, 0.3);
-                outline-offset: 2px;
-            }
-            .lang-btn:hover {
-                color: var(--ink);
-            }
-            .lang-btn.active {
-                color: var(--ink);
-                font-weight: 500;
-            }
-
-            .header-section {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 32px;
-                position: relative;
-            }
-
-            .content {
-                font-size: 17px;
-                line-height: 1.8;
-                color: #c0c0c0;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-                animation: fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-
-            @keyframes fade-in {
-                from {
-                    opacity: 0;
-                    transform: translateY(8px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .content p {
-                margin: 0 0 24px;
-            }
-            .content p:last-child {
-                margin: 0;
-            }
-            .content b {
-                color: var(--ink);
-                font-weight: 600;
-            }
-
-            #page-transition {
-                position: fixed;
-                inset: 0;
-                z-index: 50;
-                pointer-events: none;
-                background: #111111;
-                clip-path: circle(0px at var(--cx, 50%) var(--cy, 50%));
-                transition: none;
-            }
-            #page-transition.active {
-                animation: circle-reveal 0.5s cubic-bezier(0.65, 0, 0.35, 1)
-                    forwards;
-            }
-            @keyframes circle-reveal {
-                to {
-                    clip-path: circle(150% at var(--cx, 50%) var(--cy, 50%));
-                }
-            }
-
-            #loader {
-                position: fixed;
-                inset: 0;
-                z-index: 100;
-                background: #111111;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition:
-                    opacity 0.4s ease,
-                    visibility 0.4s ease;
-                overflow: hidden;
-            }
-            #loader.hidden {
-                opacity: 0;
-                visibility: hidden;
-            }
-            .loader-rings {
-                position: relative;
-                width: 80px;
-                height: 80px;
-            }
-            .loader-ring {
-                position: absolute;
-                inset: 0;
-                border: 2px solid transparent;
-                border-top-color: rgba(255, 255, 255, 0.4);
-                border-radius: 50%;
-                animation: spin 1.2s linear infinite;
-            }
-            .loader-ring:nth-child(2) {
-                animation-duration: 0.9s;
-                animation-direction: reverse;
-                border-top-color: rgba(255, 255, 255, 0.2);
-                scale: 0.75;
-            }
-            @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
-            }
-
-            @media (max-width: 600px) {
-                body {
-                    padding: 40px 16px;
-                    padding-top: max(40px, env(safe-area-inset-top) + 16px);
-                    padding-bottom: max(
-                        40px,
-                        env(safe-area-inset-bottom) + 16px
-                    );
-                }
-                .card {
-                    padding: 24px;
-                    backdrop-filter: blur(6px);
-                    -webkit-backdrop-filter: blur(6px);
-                }
-                .content {
-                    font-size: 15px;
-                }
-                .header-section {
-                    margin-bottom: 24px;
-                }
-                .back {
-                    padding: 8px;
-                    margin: -8px;
-                }
-                .lang-btn {
-                    padding: 6px 8px;
-                }
-            }
-
-            @media (max-width: 360px) {
-                .card {
-                    padding: 20px;
-                }
-                .content {
-                    font-size: 14px;
-                }
-                .lang-switcher {
-                    font-size: 11px;
-                    padding-left: 4px;
-                }
-                .lang-btn {
-                    padding: 2px 4px;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="canonical" href="https://parahin.space/lifestory.html" />
+        <meta name="theme-color" content="#111111" />
+        <meta property="og:image:alt" content="A mountain landscape in Altai" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Story — Arseniy Parakhin" />
+        <meta name="twitter:description" content="From Altai to building software and starting ventures." />
+        <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     </head>
-    <body>
-        <div id="loader">
-            <div class="loader-rings">
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-            </div>
-        </div>
+    <body data-title-en="Story — Arseniy Parakhin" data-title-ru="История — Арсений Парахин">
+        
         <div class="bg"></div>
         <div class="spotlight"></div>
         <div class="grain"></div>
@@ -331,13 +41,14 @@
                     data-ru="← назад"
                     >← back</a
                 >
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="en">EN</button>
+                <div class="lang-switcher" role="group" aria-label="Language" data-label-en="Language" data-label-ru="Язык">
+                    <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
                     <span style="color: rgba(255, 255, 255, 0.2)">|</span>
-                    <button class="lang-btn" data-lang="ru">RU</button>
+                    <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
                 </div>
             </div>
 
+            <h1 class="story-title" data-en="My story" data-ru="Моя история">My story</h1>
             <div class="content">
                 <p
                     data-en="I grew up in a small village in Altai, Russia. While most people around me weren't building startups, I turned to the internet to learn and grow."
@@ -369,23 +80,14 @@
                 </p>
 
                 <p
-                    data-en="I chose to spend <b>40 minutes on a bus</b> each morning to attend a stronger school in Biysk instead of settling for the one near home. Most of that commute time goes into reading, thinking, and developing ideas for what's next."
-                    data-ru="Я выбрал тратить <b>40 минут на автобусе</b> каждое утро, чтобы посещать более сильную школу в Бийске вместо той, что была рядом с домом. Большая часть времени в дороге уходит на чтение, размышления и разработку идей для будущего."
-                >
-                    I chose to spend <b>40 minutes on a bus</b> each morning to
-                    attend a stronger school in Biysk instead of settling for the
-                    one near home. Most of that commute time goes into reading,
-                    thinking, and developing ideas for what's next.
-                </p>
+                    data-en="I looked for ways to learn beyond my immediate surroundings, investing time in reading, exploring ideas, and building practical skills."
+                    data-ru="Я искал возможности учиться за пределами привычного окружения: читал, изучал новые идеи и развивал практические навыки."
+                >I looked for ways to learn beyond my immediate surroundings, investing time in reading, exploring ideas, and building practical skills.</p>
 
                 <p
-                    data-en="Today I'm building my next startup while preparing to study Computer Engineering at <b>Politecnico di Milano</b>, one of Europe's top technical universities."
-                    data-ru="Сегодня я создаю свой следующий стартап, готовясь к учёбе на Computer Engineering в <b>Politecnico di Milano</b>, одном из лучших технических университетов Европы."
-                >
-                    Today I'm building my next startup while preparing to study
-                    Computer Engineering at <b>Politecnico di Milano</b>, one of
-                    Europe's top technical universities.
-                </p>
+                    data-en="Today I continue building products and exploring how software, AI, and finance can solve real problems."
+                    data-ru="Сейчас я продолжаю создавать продукты и изучаю, как разработка, ИИ и финансы помогают решать реальные задачи."
+                >Today I continue building products and exploring how software, AI, and finance can solve real problems.</p>
 
                 <p
                     data-en="My long-term vision is to build AI products that positively impact millions of people worldwide."
@@ -397,103 +99,8 @@
             </div>
         </main>
 
-        <div id="page-transition"></div>
+        
 
-        <script>
-            window.addEventListener("load", () => {
-                setTimeout(() => {
-                    document.getElementById("loader").classList.add("hidden");
-                }, 200);
-            });
-
-            function setLanguage(lang) {
-                document.querySelectorAll(".lang-btn").forEach((btn) => {
-                    btn.classList.toggle("active", btn.dataset.lang === lang);
-                });
-
-                document.querySelectorAll("[data-en]").forEach((el) => {
-                    el.innerHTML = el.dataset[lang];
-                });
-
-                localStorage.setItem("lang", lang);
-            }
-
-            const savedLang = localStorage.getItem("lang") || "en";
-            setLanguage(savedLang);
-
-            document.querySelectorAll(".lang-btn").forEach((btn) => {
-                btn.addEventListener("click", () =>
-                    setLanguage(btn.dataset.lang),
-                );
-            });
-
-            const root = document.documentElement;
-            const hasFinePointer = window.matchMedia(
-                "(hover: hover) and (pointer: fine)",
-            ).matches;
-
-            if (hasFinePointer) {
-                // Desktop/mouse: smoothly track the cursor for the spotlight effect.
-                let targetX = window.innerWidth / 2,
-                    targetY = window.innerHeight / 2;
-
-                function updateSpotlight() {
-                    root.style.setProperty("--x", targetX + "px");
-                    root.style.setProperty("--y", targetY + "px");
-                    requestAnimationFrame(updateSpotlight);
-                }
-                requestAnimationFrame(updateSpotlight);
-
-                window.addEventListener("mousemove", (e) => {
-                    targetX = e.clientX;
-                    targetY = e.clientY;
-                });
-
-                const resetSpotlight = () => {
-                    targetX = window.innerWidth / 2;
-                    targetY = window.innerHeight / 2;
-                };
-                document.addEventListener("mouseleave", resetSpotlight);
-            } else {
-                // Touch devices: no persistent cursor, so skip the per-frame
-                // animation loop entirely (saves CPU/battery) and just react
-                // directly to touch drags.
-                root.style.setProperty("--x", window.innerWidth / 2 + "px");
-                root.style.setProperty("--y", window.innerHeight / 2 + "px");
-
-                window.addEventListener(
-                    "touchmove",
-                    (e) => {
-                        if (e.touches.length > 0) {
-                            root.style.setProperty(
-                                "--x",
-                                e.touches[0].clientX + "px",
-                            );
-                            root.style.setProperty(
-                                "--y",
-                                e.touches[0].clientY + "px",
-                            );
-                        }
-                    },
-                    { passive: true },
-                );
-            }
-
-            const backLink = document.getElementById("back-link");
-            const overlay = document.getElementById("page-transition");
-            backLink.addEventListener("click", function (e) {
-                e.preventDefault();
-                const href = this.getAttribute("href");
-                const rect = this.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                overlay.style.setProperty("--cx", cx + "px");
-                overlay.style.setProperty("--cy", cy + "px");
-                overlay.classList.add("active");
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 450);
-            });
-        </script>
+        <script src="assets/site.js" defer></script>
     </body>
 </html>
