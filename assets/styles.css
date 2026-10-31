@@ -50,7 +50,7 @@
                 position: fixed;
                 inset: -2%;
                 z-index: 0;
-                background: url("../altai-bg.jpg") center 55% / cover no-repeat;
+                background: url("images/altai-bg.webp") center 55% / cover no-repeat;
                 filter: saturate(0.8) brightness(0.65);
                 pointer-events: none;
             }
