@@ -69,6 +69,12 @@ class BrowserSmokeTests(unittest.TestCase):
         self.page.set_viewport_size({"width": 320, "height": 640})
         self.page.goto(self.url + "/")
         self.assertTrue(self.page.get_by_role("heading", name="Arseniy Parakhin").is_visible())
+        self.assertTrue(self.page.locator(".avatar").evaluate(
+            "(img) => img.complete && img.naturalWidth > 0"
+        ))
+        background = self.page.request.get(self.url + "/assets/images/altai-bg.webp")
+        self.assertEqual(background.status, 200)
+        self.assertEqual(background.body()[0:4], b"RIFF")
         self.assertEqual(self.page.evaluate("document.documentElement.scrollWidth <= innerWidth"), True)
         self.assertEqual(
             self.page.locator(".reveal").first.evaluate("(el) => getComputedStyle(el).opacity"),
