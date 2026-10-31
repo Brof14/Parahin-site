@@ -10,7 +10,7 @@
 
             * {
                 box-sizing: border-box;
-                -webkit-tap-highlight-color: transparent;
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.12);
             }
             a,
             button {
@@ -472,3 +472,10 @@
     .shimmer-text { color: CanvasText; background: none; }
     .dot { background: Highlight; box-shadow: none; }
 }
+
+/* Translations use semantic <strong> instead of injecting HTML. */
+.bio strong, .content strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+.footer-row { gap: 16px; }
